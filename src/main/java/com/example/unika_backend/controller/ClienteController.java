@@ -2,8 +2,10 @@ package com.example.unika_backend.controller;
 
 import com.example.unika_backend.model.Cliente;
 import com.example.unika_backend.service.ClienteService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.swing.text.html.parser.Entity;
@@ -11,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/clientes")
+@Validated
 public class ClienteController {
 
     @Autowired
@@ -31,8 +34,9 @@ public class ClienteController {
     }
 
     @PostMapping
-    public Cliente createCliente(@RequestBody Cliente cliente){
-        return clienteService.save(cliente);
+    public ResponseEntity<?> createCliente(@Valid @RequestBody Cliente cliente){
+        Cliente novoCliente = clienteService.save(cliente);
+        return ResponseEntity.ok(novoCliente);
     }
 
     @DeleteMapping("/{id}")

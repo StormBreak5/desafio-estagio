@@ -1,6 +1,9 @@
 package com.example.unika_backend.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,9 +22,11 @@ public class Cliente {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @NotNull(message = "O tipo da pessoa não pode ser nulo.")
     private String tipoPessoa;
 
+    @NotNull(message = "O CPF/CNPJ não pode ser nulo.")
+    @Pattern(regexp = "\\d{11}|\\d{14}", message = "CPF/CNPJ inválido!")
     private String cpfCnpj;
 
     //somente pessoa física
@@ -35,6 +40,7 @@ public class Cliente {
     private Date dataCriacao;
 
     //comum entre os dois tipos
+    @Email(message = "E-mail inválido.")
     private String email;
     private Boolean ativo;
 
