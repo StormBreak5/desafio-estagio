@@ -1,5 +1,6 @@
 package com.example.unika_backend.controller;
 
+import com.example.unika_backend.service.ExcelService;
 import com.example.unika_backend.service.RelatorioService;
 import net.sf.jasperreports.engine.JRException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,9 @@ public class RelatorioController {
     @Autowired
     private RelatorioService relatorioService;
 
+    @Autowired
+    private ExcelService excelService;
+
     @GetMapping("/clientes/pdf")
     public ResponseEntity<byte[]> gerarRelatorioPDF() throws JRException, IOException {
 
@@ -30,6 +34,18 @@ public class RelatorioController {
         headers.setContentDispositionFormData("filename", "relatorio.pdf");
 
         return new ResponseEntity<>(relatorioPDF, headers, HttpStatus.OK);
+    }
+
+    @GetMapping("/clientes/excel")
+    public ResponseEntity<byte[]> gerarRelatorioExcel() throws IOException {
+
+        byte[] relatorioExcel = excelService.gerarClientesExcel();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        headers.setContentDispositionFormData("filename", "clientes.xlsx");
+
+        return new ResponseEntity<>(relatorioExcel, headers, HttpStatus.OK);
     }
 
 }
