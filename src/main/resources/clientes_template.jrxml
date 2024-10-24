@@ -6,11 +6,11 @@
     </field>
     <field name="nome" class="java.lang.String">
     </field>
-    <field name="data_nascimento" class="java.time.LocalDateTime">
+    <field name="dataNascimento" class="java.util.Date">
     </field>
     <field name="rg" class="java.lang.String">
     </field>
-    <field name="cpf_cnpj" class="java.lang.String">
+    <field name="cpfCnpj" class="java.lang.String">
     </field>
     <field name="email" class="java.lang.String">
     </field>
@@ -131,7 +131,7 @@
                 <textElement>
                     <font size="14"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{data_nascimento}]]></textFieldExpression>
+                <textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy").format($F{dataNascimento})]]></textFieldExpression>
             </textField>
             <textField textAdjust="StretchHeight">
                 <reportElement x="184" y="0" width="92" height="20" uuid="50708b14-020c-4962-8be9-70b50b45881f">
@@ -149,7 +149,7 @@
                 <textElement>
                     <font size="14"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{cpf_cnpj}]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$F{cpfCnpj}]]></textFieldExpression>
             </textField>
             <textField textAdjust="StretchHeight">
                 <reportElement x="368" y="0" width="92" height="20" uuid="4350cd70-1ecb-4ca5-aa16-c998d3a77a2a">
@@ -167,7 +167,7 @@
                 <textElement>
                     <font size="14"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{ativo}]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$F{ativo} ? "Ativo" : "Inativo"]]></textFieldExpression>
             </textField>
         </band>
     </detail>
