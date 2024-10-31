@@ -43,6 +43,23 @@ public class ClienteController {
         return ResponseEntity.ok(novoCliente);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateCliente(@PathVariable Long id, @Valid @RequestBody Cliente cliente){
+        Cliente clienteAtual = clienteService.findById(id);
+        if(clienteAtual == null){
+            return ResponseEntity.notFound().build();
+        }
+
+        clienteAtual.setId(id);
+
+        try {
+            Cliente updatedCliente = clienteService.save(cliente);
+            return ResponseEntity.ok(updatedCliente);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     @DeleteMapping("/{id}")
     public void deleteCliente(@PathVariable Long id){
         clienteService.deleteById(id);
