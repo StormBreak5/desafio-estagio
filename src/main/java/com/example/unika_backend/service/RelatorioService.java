@@ -26,9 +26,23 @@ public class RelatorioService {
         File arquivo = ResourceUtils.getFile("classpath:clientes_template.jrxml");
         JasperReport report = JasperCompileManager.compileReport(arquivo.getAbsolutePath());
 
-        //InputStream relatorioStream = this.getClass().getResourceAsStream("/clientes_template.jrxml");
+        List<Cliente> clientes = clienteRepository.findByTipoPessoa("FISICA");
+        JRBeanCollectionDataSource datasource = new JRBeanCollectionDataSource(clientes);
 
-        List<Cliente> clientes = clienteRepository.findAll();
+        Map<String, Object> params = new HashMap<>();
+        params.put("titulo", "Clientes");
+
+        JasperPrint jasperPrint = JasperFillManager.fillReport(report, params, datasource);
+
+        return JasperExportManager.exportReportToPdf(jasperPrint);
+    }
+
+    public byte[] gerarRelatorioDeClientesPJ() throws JRException, FileNotFoundException {
+
+        File arquivo = ResourceUtils.getFile("classpath:clientes_template_pj.jrxml");
+        JasperReport report = JasperCompileManager.compileReport(arquivo.getAbsolutePath());
+
+        List<Cliente> clientes = clienteRepository.findByTipoPessoa("JURIDICA");
         JRBeanCollectionDataSource datasource = new JRBeanCollectionDataSource(clientes);
 
         Map<String, Object> params = new HashMap<>();

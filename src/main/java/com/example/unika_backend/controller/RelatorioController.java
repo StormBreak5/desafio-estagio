@@ -36,6 +36,18 @@ public class RelatorioController {
         return new ResponseEntity<>(relatorioPDF, headers, HttpStatus.OK);
     }
 
+    @GetMapping("/clientes/pdfPJ")
+    public ResponseEntity<byte[]> gerarRelatorioPDFPJ() throws JRException, IOException {
+
+        byte[] relatorioPDF = relatorioService.gerarRelatorioDeClientesPJ();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        headers.setContentDispositionFormData("filename", "relatorioPJ.pdf");
+
+        return new ResponseEntity<>(relatorioPDF, headers, HttpStatus.OK);
+    }
+
     @GetMapping("/clientes/excel")
     public ResponseEntity<byte[]> gerarRelatorioExcel() throws IOException {
 
@@ -43,9 +55,20 @@ public class RelatorioController {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-        headers.setContentDispositionFormData("filename", "clientes.xlsx");
+        headers.setContentDispositionFormData("filename", "clientes_pf.xlsx");
 
         return new ResponseEntity<>(relatorioExcel, headers, HttpStatus.OK);
     }
 
+    @GetMapping("/clientes/excelPJ")
+    public ResponseEntity<byte[]> gerarRelatorioExcelPJ() throws IOException {
+
+        byte[] relatorioExcel = excelService.gerarClientesExcelPJ();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        headers.setContentDispositionFormData("filename", "clientes_pj.xlsx");
+
+        return new ResponseEntity<>(relatorioExcel, headers, HttpStatus.OK);
+    }
 }

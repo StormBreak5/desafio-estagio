@@ -4,11 +4,11 @@
 
     <field name="id" class="java.lang.Long">
     </field>
-    <field name="nome" class="java.lang.String">
+    <field name="razaoSocial" class="java.lang.String">
     </field>
-    <field name="dataNascimento" class="java.util.Date">
+    <field name="dataCriacao" class="java.util.Date">
     </field>
-    <field name="rg" class="java.lang.String">
+    <field name="inscricaoEstadual" class="java.lang.String">
     </field>
     <field name="cpfCnpj" class="java.lang.String">
     </field>
@@ -41,7 +41,7 @@
                     <textElement textAlignment="Right">
                         <font size="14" isBold="false"/>
                     </textElement>
-                    <text><![CDATA[Pessoa Física]]></text>
+                    <text><![CDATA[Pessoa Jurídica]]></text>
                 </staticText>
             </frame>
         </band>
@@ -61,7 +61,7 @@
                 <textElement textAlignment="Center">
                     <font size="14" isBold="true"/>
                 </textElement>
-                <text><![CDATA[Nome]]></text>
+                <text><![CDATA[Razão Social]]></text>
             </staticText>
             <staticText>
                 <reportElement mode="Opaque" x="167" y="0" width="101" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="7dca3aa5-31eb-4a16-9963-ae96eeff86f2">
@@ -70,7 +70,7 @@
                 <textElement textAlignment="Center">
                     <font size="14" isBold="true"/>
                 </textElement>
-                <text><![CDATA[Data Nasc]]></text>
+                <text><![CDATA[Data Criação]]></text>
             </staticText>
             <staticText>
                 <reportElement mode="Opaque" x="268" y="0" width="109" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="4d060744-9d2b-440a-83d6-e92ea1ff656d">
@@ -79,7 +79,7 @@
                 <textElement textAlignment="Center">
                     <font size="14" isBold="true"/>
                 </textElement>
-                <text><![CDATA[RG]]></text>
+                <text><![CDATA[Insc. Est.]]></text>
             </staticText>
             <staticText>
                 <reportElement mode="Opaque" x="377" y="0" width="174" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="73a32816-8690-4749-84d6-874c6dc09b65">
@@ -88,7 +88,7 @@
                 <textElement textAlignment="Center">
                     <font size="14" isBold="true"/>
                 </textElement>
-                <text><![CDATA[CPF]]></text>
+                <text><![CDATA[CNPJ]]></text>
             </staticText>
             <staticText>
                 <reportElement mode="Opaque" x="552" y="0" width="156" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="97e9f7b7-37c7-48f5-9fcd-c8378866b58a">
@@ -122,7 +122,7 @@
                 <textElement textAlignment="Center">
                     <font size="14"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$F{razaoSocial}]]></textFieldExpression>
             </textField>
             <textField textAdjust="StretchHeight">
                 <reportElement x="167" y="0" width="101" height="20" uuid="f7ae521a-9f1a-45e0-8705-50a7c932b7dd">
@@ -131,7 +131,7 @@
                 <textElement textAlignment="Center">
                     <font size="14"/>
                 </textElement>
-                <textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy").format($F{dataNascimento})]]></textFieldExpression>
+                <textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy").format($F{dataCriacao})]]></textFieldExpression>
             </textField>
             <textField textAdjust="StretchHeight">
                 <reportElement x="268" y="0" width="109" height="20" uuid="50708b14-020c-4962-8be9-70b50b45881f">
@@ -140,7 +140,7 @@
                 <textElement textAlignment="Center">
                     <font size="14"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$F{rg}]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$F{inscricaoEstadual}]]></textFieldExpression>
             </textField>
             <textField textAdjust="StretchHeight">
                 <reportElement x="377" y="0" width="174" height="20" uuid="bbb340c8-9af8-453f-a295-ea2a15e60301">
