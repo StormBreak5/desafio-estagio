@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -63,5 +64,17 @@ public class ClienteController {
     @DeleteMapping("/{id}")
     public void deleteCliente(@PathVariable Long id){
         clienteService.deleteById(id);
+    }
+
+    @DeleteMapping("/{clienteId}/enderecos/{enderecoId}")
+    public ResponseEntity<?> deletaEndereco(@PathVariable Long clienteId, @PathVariable Long enderecoId){
+        try {
+            clienteService.deleteAddress(clienteId, enderecoId);
+            return ResponseEntity.ok().build();
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao excluir endereço: " + e.getMessage());
+        }
     }
 }
