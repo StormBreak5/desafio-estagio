@@ -17,6 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/clientes")
+@CrossOrigin(value = "http://localhost:4200")
 @Validated
 public class ClienteController {
 
