@@ -38,6 +38,44 @@ public class ClienteService {
         return clienteRepository.save(cliente);
     }
 
+    public Endereco addAddress(Long clienteId, Endereco endereco) {
+        Cliente cliente = clienteRepository.findById(clienteId).orElseThrow(
+                () -> new IllegalArgumentException("Cliente não encontrado")
+        );
+
+        endereco.setCliente(cliente);
+        cliente.getEnderecos().add(endereco);
+        enderecoRepository.save(endereco);
+        clienteRepository.save(cliente);
+        return endereco;
+    }
+
+    public Endereco updateAddress(Long clienteId, Long enderecoId, Endereco endereco) {
+        Cliente cliente = clienteRepository.findById(clienteId).orElseThrow(
+                () -> new IllegalArgumentException("Cliente não encontrado")
+        );
+
+        Endereco enderecoExistente = enderecoRepository.findById(enderecoId).orElseThrow(
+                () -> new IllegalArgumentException("Endereço não encontrado")
+        );
+
+        if(!enderecoExistente.getCliente().equals(cliente)) {
+            throw new IllegalArgumentException("O endereço não pertence ao cliente selecionado");
+        }
+
+        enderecoExistente.setLogradouro(endereco.getLogradouro());
+        enderecoExistente.setNumero(endereco.getNumero());
+        enderecoExistente.setCep(endereco.getCep());
+        enderecoExistente.setBairro(endereco.getBairro());
+        enderecoExistente.setCidade(endereco.getCidade());
+        enderecoExistente.setUf(endereco.getUf());
+        enderecoExistente.setTelefone(endereco.getTelefone());
+        enderecoExistente.setEnderecoPrincipal(endereco.getEnderecoPrincipal());
+        enderecoExistente.setComplemento(endereco.getComplemento());
+
+        return enderecoRepository.save(enderecoExistente);
+    }
+
     public void deleteAddress(Long clienteId, Long addressId) {
         Cliente cliente = clienteRepository.findById(clienteId).orElseThrow(() -> new IllegalArgumentException("Cliente não encontrado"));
         Endereco endereco = enderecoRepository.findById(addressId).orElseThrow(() -> new IllegalArgumentException("Endereço não encontrado"));

@@ -1,6 +1,7 @@
 package com.example.unika_backend.controller;
 
 import com.example.unika_backend.model.Cliente;
+import com.example.unika_backend.model.Endereco;
 import com.example.unika_backend.service.ClienteService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/clientes")
-@CrossOrigin(value = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200")
 @Validated
 public class ClienteController {
 
@@ -65,6 +66,22 @@ public class ClienteController {
     @DeleteMapping("/{id}")
     public void deleteCliente(@PathVariable Long id){
         clienteService.deleteById(id);
+    }
+
+    @PostMapping("/{clienteId}/enderecos")
+    public ResponseEntity<?> adicionaEndereco(@PathVariable Long clienteId, @RequestBody Endereco endereco){
+        Endereco novoEndereco = clienteService.addAddress(clienteId, endereco);
+        return ResponseEntity.status(HttpStatus.CREATED).body(novoEndereco);
+    }
+
+    @PutMapping("/{clienteId}/enderecos/{enderecoId}")
+    public ResponseEntity<?> atualizaEndereco(@PathVariable Long clienteId, @PathVariable Long enderecoId, @Valid @RequestBody Endereco endereco){
+        try {
+            Endereco enderecoAtualizado = clienteService.updateAddress(clienteId, enderecoId, endereco);
+            return ResponseEntity.ok(enderecoAtualizado);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @DeleteMapping("/{clienteId}/enderecos/{enderecoId}")
