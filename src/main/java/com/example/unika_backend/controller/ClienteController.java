@@ -3,6 +3,7 @@ package com.example.unika_backend.controller;
 import com.example.unika_backend.model.Cliente;
 import com.example.unika_backend.model.Endereco;
 import com.example.unika_backend.service.ClienteService;
+import com.example.unika_backend.service.ImportClienteService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.swing.text.html.parser.Entity;
 import java.util.List;
@@ -24,6 +26,9 @@ public class ClienteController {
 
     @Autowired
     private ClienteService clienteService;
+
+    @Autowired
+    private ImportClienteService importClienteService;
 
     @GetMapping
     public Page<Cliente> getAllClientes(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
@@ -93,6 +98,26 @@ public class ClienteController {
             return ResponseEntity.notFound().build();
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao excluir endereço: " + e.getMessage());
+        }
+    }
+
+    @PostMapping("/importaPF")
+    public ResponseEntity<String> importaClientesPF(@RequestParam("file") MultipartFile planilha){
+        try {
+            importClienteService.importClientesPF(planilha);
+            return ResponseEntity.ok("Clientes importados com sucesso!");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao importar clientes: " + e.getMessage());
+        }
+    }
+
+    @PostMapping("/importaPJ")
+    public ResponseEntity<String> importaClientesPJ(@RequestParam("file") MultipartFile planilha){
+        try {
+            importClienteService.importClientesPJ(planilha);
+            return ResponseEntity.ok("Clientes importados com sucesso!");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao importar clientes: " + e.getMessage());
         }
     }
 }
