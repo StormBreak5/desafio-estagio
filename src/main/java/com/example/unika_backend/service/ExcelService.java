@@ -34,7 +34,7 @@ public class ExcelService {
 
         }
 
-        //Pega todos os clientes do banco de dados (separar em pessoa física e jurídica depois)
+        //Pega todos os clientes do banco de dados
         clientes = clienteRepository.findByTipoPessoa("FISICA");
 
         //Formatação de data
@@ -79,7 +79,7 @@ public class ExcelService {
             header.createCell(i).setCellValue(colunasPJ[i]);
         }
 
-        //Pega todos os clientes do banco de dados (separar em pessoa física e jurídica depois)
+        //Pega todos os clientes do banco de dados
         clientes = clienteRepository.findByTipoPessoa("JURIDICA");
 
         //Formatação de data

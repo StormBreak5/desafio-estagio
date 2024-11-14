@@ -22,8 +22,17 @@ public class ImportClienteService {
 
     public void importClientesPF(MultipartFile planilha) throws IOException {
         List<Cliente> clientes = new ArrayList<>();
+
+        if(!planilha.getContentType().equalsIgnoreCase("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")){
+            throw new IllegalArgumentException("O tipo de arquivo selecionado não é aceito. Apenas arquivos do tipo .xlsx são aceitos.");
+        }
+
         Workbook workbook = new XSSFWorkbook((planilha.getInputStream()));
         Sheet sheet = workbook.getSheetAt(0);
+
+        if(!sheet.getRow(0).getCell(0).getStringCellValue().equals("Nome")) {
+            throw new IllegalArgumentException("A planilha enviada não é equivalente a uma do cadastro de pessoa física.");
+        }
 
         for(Row row : sheet) {
             if(row.getRowNum() == 0) {continue;}
@@ -50,8 +59,17 @@ public class ImportClienteService {
 
     public void importClientesPJ(MultipartFile planilha) throws IOException {
         List<Cliente> clientes = new ArrayList<>();
+
+        if(!planilha.getContentType().equalsIgnoreCase("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")){
+            throw new IllegalArgumentException("O tipo de arquivo selecionado não é aceito. Apenas arquivos do tipo .xlsx são aceitos.");
+        }
+
         Workbook workbook = new XSSFWorkbook((planilha.getInputStream()));
         Sheet sheet = workbook.getSheetAt(0);
+
+        if(!sheet.getRow(0).getCell(0).getStringCellValue().equals("Razão Social")) {
+            throw new IllegalArgumentException("A planilha enviada não é equivalente a uma do cadastro de pessoa jurídica.");
+        }
 
         for(Row row : sheet) {
             if(row.getRowNum() == 0) {continue;}
